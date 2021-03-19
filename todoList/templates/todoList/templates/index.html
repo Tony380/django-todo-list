@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container content mt-5">
+    <h1 class="text-center mb-5">Todo List</h1>
+    <table class="table table-hover border border-info text-center">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">To do</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        {% for task in object_list %}
+        <tbody>
+            <tr>
+                <td>{{task.date_created}}</td>
+                <td>{{task.content}}</td>
+                <td>
+                    <a href="/update/{{task.id}}">Update</a> / <a href="/delete/{{task.id}}">Delete</a>
+                </td>
+              </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    <div class="container">
+        <form class="input-group mb-3 w-50 m-auto" action="/" method="POST">
+            <input class="form-control" type="text" name="content" id="content">
+            <button class="btn btn-outline-primary" type="submit">Add task</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
