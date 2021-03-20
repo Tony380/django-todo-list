@@ -1,9 +1,11 @@
 from django.urls import path
-from . import views
+from .views import index, delete, update
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', index, name='index'),
+    path('delete/<int:id>', delete, name='delete'),
+    path('update/<int:id>', update, name='update'),
 ]
 
 app_name = 'todoList'

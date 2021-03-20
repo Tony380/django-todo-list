@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container content mt-5">
@@ -11,21 +12,22 @@
             <th scope="col">Action</th>
           </tr>
         </thead>
-        {% for task in object_list %}
+        {% for task in context %}
         <tbody>
             <tr>
                 <td>{{task.date_created}}</td>
                 <td>{{task.content}}</td>
                 <td>
-                    <a href="/update/{{task.id}}">Update</a> / <a href="/delete/{{task.id}}">Delete</a>
+                    <a href="{% url 'todoList:update' id=task.id %}">Update</a> / <a href="{% url 'todoList:delete' id=task.id %}">Delete</a>
                 </td>
               </tr>
         </tbody>
         {% endfor %}
     </table>
     <div class="container">
-        <form class="input-group mb-3 w-50 m-auto" action="/" method="POST">
-            <input class="form-control" type="text" name="content" id="content">
+        <form class="input-group mb-3 w-50 m-auto" method="POST">
+            {% csrf_token %}
+            <input class="form-control" type="text" name='content' required>
             <button class="btn btn-outline-primary" type="submit">Add task</button>
         </form>
     </div>
