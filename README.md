@@ -1,0 +1,1 @@
+Simple Django Todo-list with Bootstrap
