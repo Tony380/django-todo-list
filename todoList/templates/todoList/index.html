@@ -8,26 +8,33 @@
         <thead>
           <tr>
             <th scope="col">Date</th>
-            <th scope="col">To do</th>
+            <th class="w-50" scope="col">To do</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
-        {% for task in context %}
+        {% for task in object_list %}
         <tbody>
             <tr>
                 <td>{{task.date_created}}</td>
-                <td>{{task.content}}</td>
+                <td class="w-50">{{task.content}}</td>
                 <td>
-                    <a href="{% url 'todoList:update' id=task.id %}">Update</a> / <a href="{% url 'todoList:delete' id=task.id %}">Delete</a>
+                    <form class="d-inline" method="POST" action="{% url 'todoList:update' pk=task.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Update</button>
+                    </form>
+                    <form class="d-inline" method="POST" action="{% url 'todoList:delete' pk=task.id %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-primary" type="submit">Delete</button>
+                    </form>
                 </td>
               </tr>
         </tbody>
         {% endfor %}
     </table>
     <div class="container">
-        <form class="input-group mb-3 w-50 m-auto" method="POST">
+        <form class="input-group mb-3 w-50 m-auto" action="{% url 'todoList:create' %}" method="POST">
             {% csrf_token %}
-            <input class="form-control" type="text" name='content' required>
+            <input class="form-control rounded" type="text" name='content' required maxlength="50">
             <button class="btn btn-outline-primary" type="submit">Add task</button>
         </form>
     </div>

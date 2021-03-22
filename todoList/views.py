@@ -1,33 +1,31 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DeleteView, UpdateView, CreateView
 from .models import TodoList
 
 
-def index(request):
+class Index(ListView):
 
-    if request.method == 'POST':
-        task = TodoList.objects.create(content=request.POST['content'])
-        task.save()
-        return redirect('todoList:index')
-    else:
-        context = TodoList.objects.all()
-        return render(request, 'todoList/index.html', {'context': context})
+    model = TodoList
+    template_name = 'todoList/index.html'
 
 
-def delete(request, id):
+class CreateTask(CreateView):
 
-    task = TodoList.objects.get(id=id)
-    task.delete()
-    return redirect('todoList:index')
+    model = TodoList
+    fields = ['content']
+    success_url = '/'
 
 
-def update(request, id):
-    task = TodoList.objects.get(id=id)
+class DeleteTask(DeleteView):
 
-    if request.method == 'POST':
-        task.content = request.POST['content']
-        task.save()
-        return redirect('todoList:index')
+    model = TodoList
+    success_url = reverse_lazy('todoList:index')
 
-    else:
-        return render(request, 'todoList/update.html', {'task': task})
 
+class UpdateTask(UpdateView):
+
+    model = TodoList
+    template_name = 'todoList/update.html'
+    fields = ['content']
+    success_url = reverse_lazy('todoList:index')

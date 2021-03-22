@@ -4,9 +4,9 @@
 {% block content %}
 <div class="container">
     <h1 class="text-center mt-5 mb-5">Update</h1>
-    <form class="input-group mb-3 w-50 m-auto" method="POST">
+    <form class="input-group mb-3 w-75 m-auto" method="POST">
         {% csrf_token %}
-        <input class="form-control" type="text" name='content' value="{{task.content}}" required>
+        <input class="form-control rounded" type="text" name='content' value="{{object.content}}" required maxlength="50">
         <button class="btn btn-outline-primary" type="submit">Update task</button>
     </form>
 </div>
